@@ -19,7 +19,7 @@ def count_overlaps(data):
     def range_contains(a, b):
         return len(set(a) & set(b)) > 0
 
-    def either_fully_contains(a, b):
+    def either_contains(a, b):
         return range_contains(a, b) or range_contains(b, a)
     return sum(either_fully_contains(fst, snd) for fst, snd in data)
 
