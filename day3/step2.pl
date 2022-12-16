@@ -11,7 +11,7 @@ for ('a'..'z', 'A'..'Z') {
   $weight{$_} = ++$i;
 }
 
-my @lines = <>;
+my @lines = <<>>;
 while (@lines) {
   my $fst = pop @lines;
   chomp($fst);

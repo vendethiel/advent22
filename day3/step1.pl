@@ -13,7 +13,7 @@ my $i;
 for ('a'..'z', 'A'..'Z') {
   $weight{$_} = ++$i;
 }
-for (<>) {
+for (<<>>) {
   chomp;
   my ($lfg, $rgt) = cut_in_half($_);
 
