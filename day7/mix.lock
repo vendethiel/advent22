@@ -1,0 +1,3 @@
+%{
+  "adt": {:hex, :adt, "1.0.0", "747dba45676be867702779a85535fdf73d86a6023dcc4ef31cfc65056f8a67f0", [:mix], [], "hexpm", "3fab6cd0cd8e5f47bba46c31ee46d5d61af169bb91ea36e2fb35a2aba0a33348"},
+}
