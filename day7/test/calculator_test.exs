@@ -4,11 +4,20 @@ defmodule CalculatorTest do
 
   import AST
 
-  test "Calculate empty trees" do
-    assert Calculator.calculate(%{}) == %{}
+  test "calculate empty trees" do
+    assert Calculator.calculate(%{}) == %AST.CalculatedDir{size: 0, contents: %{}}
   end
 
-  test "Calculate a big tree" do
+  test "calculate top-level files" do
+    assert Calculator.calculate(%{"a" => file("a", 500)}) == %AST.CalculatedDir{
+      size: 500,
+      contents: %{
+        "a" => file("a", 500)
+      }
+    }
+  end
+
+  test "calculate a big tree" do
     assert Calculator.calculate(%{
       "a" => %{
         "x" => %{
@@ -23,41 +32,44 @@ defmodule CalculatorTest do
       "b" => %{
         "|" => %{},
       },
-    }) == %{
-      "a" => %AST.CalculatedDir{
-        size: 5,
-        contents: %{
-          "x" => %AST.CalculatedDir{
-            size: 0,
-            contents: %{
-              "1" => %AST.CalculatedDir{
-                size: 0,
-                contents: %{}
+    }) == %AST.CalculatedDir{
+      size: 5,
+      contents: %{
+        "a" => %AST.CalculatedDir{
+          size: 5,
+          contents: %{
+            "x" => %AST.CalculatedDir{
+              size: 0,
+              contents: %{
+                "1" => %AST.CalculatedDir{
+                  size: 0,
+                  contents: %{}
+                }
+              }
+            },
+            "y" => %AST.CalculatedDir{
+              size: 5,
+              contents: %{
+                "I" => %AST.CalculatedDir{
+                  size: 0,
+                  contents: %{}
+                },
+                "II" => file("II", 2),
+                "III" => file("III", 3),
               }
             }
-          },
-          "y" => %AST.CalculatedDir{
-            size: 5,
-            contents: %{
-              "I" => %AST.CalculatedDir{
-                size: 0,
-                contents: %{}
-              },
-              "II" => file("II", 2),
-              "III" => file("III", 3),
+          }
+        },
+        "b" => %AST.CalculatedDir{
+          size: 0,
+          contents: %{
+            "|" => %AST.CalculatedDir{
+              size: 0,
+              contents: %{}
             }
           }
+        },
         }
-      },
-      "b" => %AST.CalculatedDir{
-        size: 0,
-        contents: %{
-          "|" => %AST.CalculatedDir{
-            size: 0,
-            contents: %{}
-          }
-        }
-      },
-    }
+      }
   end
 end

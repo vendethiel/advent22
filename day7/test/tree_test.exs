@@ -40,7 +40,36 @@ defmodule TreeTest do
     }
   end
 
+  test "should not override a node with a parent empty directory" do
+    assert Tree.from_flat(%{
+      ["b", "lpzgcrd", "ztwbpvbq", "wdhjpzp"] => %{},
+      ["b", "ppf", "mbbmmf.plr"] => file("mbbmmf.plr", 176398),
+      ["b", "lpzgcrd"] => %{},
+    }) == %{
+      "b" => %{
+        "lpzgcrd" => %{
+          "ztwbpvbq" => %{
+            "wdhjpzp" => %{}
+          }
+        },
+        "ppf" => %{
+          "mbbmmf.plr" => file("mbbmmf.plr", 176398),
+        }
+      }
+    }
+  end
+
   test "flatten" do
-    assert Tree.to_flat(%{"a" => %{"b" => %{"c" => "d"}}}) == %{["a", "b", "c"] => "d"}
+    assert Tree.flatten(%{
+      "x" => %AST.CalculatedDir{
+        size: 0,
+        contents: %{
+          "1" => %AST.CalculatedDir{
+            size: 0,
+            contents: %{}
+          }
+        }
+      }
+    }) == %{["x"] => 0, ["x", "1"] => 0}
   end
 end

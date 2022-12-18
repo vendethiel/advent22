@@ -11,9 +11,11 @@ defmodule Evaluator do
   # /usr/local/bin/ => ["bin", "local", "usr"]
 
   defp run([%AST.Ls{lines: lines}|xs], paths, rev_pwd) do
-    updated = Enum.reduce(lines, paths, fn line, paths ->
-      name = line.name
-      Map.put(paths, Enum.reverse([name|rev_pwd]), line)
+    updated = Enum.reduce(lines, paths, fn
+      %AST.Dir{name: name}, paths ->
+        Map.put_new(paths, Enum.reverse([name|rev_pwd]), %{})
+      line, paths ->
+        Map.put_new(paths, Enum.reverse([line.name|rev_pwd]), line)
     end)
     run(xs, updated, rev_pwd)
   end

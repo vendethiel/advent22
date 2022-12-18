@@ -28,7 +28,7 @@ defmodule EvaluatorTest do
   test "should mark a path" do
     assert Evaluator.evaluate([
       ls([dir("a")])
-    ]) == %{["a"] => dir("a")}
+    ]) == %{["a"] => %{}}
   end
 
   test "evaluate" do
@@ -45,15 +45,15 @@ defmodule EvaluatorTest do
       cd("b"),
       ls([dir("|")])
     ]) == %{
-      ["a"] => dir("a"),
-      ["a", "x"] => dir("x"),
-      ["a", "x", "1"] => dir("1"),
-      ["a", "y"] => dir("y"),
-      ["a", "y", "I"] => dir("I"),
+      ["a"] => %{},
+      ["a", "x"] => %{},
+      ["a", "x", "1"] => %{},
+      ["a", "y"] => %{},
+      ["a", "y", "I"] => %{},
       ["a", "y", "II"] => file("II", 2),
       ["a", "y", "III"] => file("III", 3),
-      ["b"] => dir("b"),
-      ["b", "|"] => dir("|"),
+      ["b"] => %{},
+      ["b", "|"] => %{},
     }
   end
 
