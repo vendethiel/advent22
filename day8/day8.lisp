@@ -40,26 +40,19 @@
           (or (every (lambda (x) (< x el)) before-column)
               (every (lambda (x) (< x el)) after-column))))))
 
-(defun debugp (msg val)
-  ;;(format t "~a ~a~%" msg val)
-  val)
 (defun view-distance (board i j)
   (let* ((line (line board i))
          (column (column board j))
          (el (index board i j)))
     (labels ((num-visible (ary)
-               ;;(debugp "num-visible" ary)
                (if ary
                    (1+ (if (< (car ary) el) (num-visible (cdr ary)) 0))
                    0)))
-      ;;(format t "~%Line ~a=~a Column ~a=~a el=~a~%" i line j column el)
       (*
        (destructuring-bind (before-line . after-line) (split-array-at line j)
-         ;;(format t "bl=~a al=~a~%" (reverse before-line) after-line)
-         (* (debugp "bl" (num-visible (reverse before-line)))
-            (debugp "al" (num-visible after-line))))
+         (* (num-visible (reverse before-line))
+            (num-visible after-line)))
        (destructuring-bind (before-column . after-column) (split-array-at column i)
-         ;;(format t "bc=~a ac=~a~%" (reverse before-column) after-column)
          (* (num-visible (reverse before-column))
             (num-visible after-column)))))))
 
@@ -71,7 +64,6 @@
           :summing
           (loop
             :for j :from 0 :to (1- width)
-            ;;:do (format t "i=~a j=~a = ~a~%" i j (is-visible board i j))
             :counting (is-visible board i j)))))
 
 ;; Step 2
@@ -82,7 +74,6 @@
           :maximizing
           (loop
             :for j :from 0 :to (1- width)
-            ;;:do (format t "i=~a j=~a = ~a~%" i j (is-visible board i j))
             :maximizing (view-distance board i j)))))
 
 ; Tests
