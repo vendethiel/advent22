@@ -1,0 +1,26 @@
+(lang dune 3.6)
+
+(name day11)
+
+(generate_opam_files true)
+
+(source
+ (github username/reponame))
+
+(authors "vendethiel")
+
+(maintainers "vendethiel")
+
+(license LICENSE)
+
+(documentation https://url/to/documentation)
+
+(package
+ (name day11)
+ (synopsis "AoC22 Day11")
+ (description "AoC22 Day11")
+ (depends ocaml dune)
+ (tags
+  (aoc advent code "advent of code")))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
